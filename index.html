@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Plotly Chart</title>
+    <!-- Import the Plotly library -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  </head>
+  <body>
+    <!-- Create a container element for the chart -->
+    <div id="chart"></div>
+
+    <script>
+      // Create a figure
+      var fig = {
+        data: [{x: [1, 2, 3], y: [1, 4, 9]}],
+        layout: {title: "Example Chart"}
+      };
+
+      // Embed the chart in the container element
+      Plotly.newPlot("chart", fig);
+    </script>
+  </body>
+</html>
