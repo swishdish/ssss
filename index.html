@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My Plotly Chart</title>
-    <!-- Import the Plotly library -->
+    <title>Bitcoin Price History</title>
+    <!-- Import the d3-fetch and plotly.js-dist libraries -->
+    <script src="https://d3js.org/d3-fetch.v2.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   </head>
   <body>
@@ -10,14 +11,34 @@
     <div id="chart"></div>
 
     <script>
-      // Create a figure
-      var fig = {
-        data: [{x: [1, 2, 3], y: [1, 4, 9]}],
-        layout: {title: "Example Chart"}
-      };
+      // Download bitcoin price data from CoinMarketCap
+      d3.csv("https://coinmarketcap.com/currencies/bitcoin/historical-data/?start=20091012&end=20230407").then(
+        function (data) {
+          // Convert date column to datetime format
+          data.forEach(function (d) {
+            d.Date = new Date(d.Date);
+          });
 
-      // Embed the chart in the container element
-      Plotly.newPlot("chart", fig);
+          // Create a trace for the line chart
+          var trace = {
+            x: data.map(function (d) {
+              return d.Date;
+            }),
+            y: data.map(function (d) {
+              return d.Close;
+            }),
+            type: "scatter"
+          };
+
+          // Create a layout for the chart
+          var layout = {
+            title: "Bitcoin Price History"
+          };
+
+          // Render the chart in the container element
+          Plotly.newPlot("chart", [trace], layout);
+        }
+      );
     </script>
   </body>
 </html>
